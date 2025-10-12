@@ -1,0 +1,198 @@
+#include <iostream>
+#include "mylib.h"
+
+int main() {
+    std::cout << "2 + 3 = " << add(2, 3) << std::endl;
+    return 0;
+}
+//
+// Created by HP on 07-10-2025.
+//#include <iostream>
+#include<vector>
+#include<ctime>
+class pokemon {
+public:
+    pokemon(std::string n,int h,int d,int a,int s,std::vector<std::pair<std::string,int>>type) {
+        name=n;
+        health=h;
+        defense=d;
+        attack=a;
+        range=type;
+        speed=s;
+    }
+    std::string name;
+    int health;
+    int defense;
+    int attack;
+    int speed;
+    std::vector<std::pair<std::string,int>> range;
+    void getinfo() {
+
+        std::cout<<"Name: "<<name;
+        std::cout<<" HP: "<<health;
+        std::cout<<" Defense: "<<defense;
+        std::cout<<" Attack: "<<attack;
+        std::cout<<" Speed: "<<speed<<std::endl;
+        std::cout<<"Attack Type: ";
+        for(int i=0;i<range.size();i++) {
+
+            std::cout<<range[i].first<<"("<<range[i].second<<") ";
+        }
+        std::cout<<std::endl<<std::endl;
+    }
+};
+int main() {
+    int i,j,l,m,p,q;
+    srand(time(0));
+
+    std::vector<pokemon> pokedex={
+        pokemon ("Pikachu",150,81,75,48,
+            {{"Thunderbolt",67},{"Quick",56},{"Electroball",40},
+                {"Electroweb",34}}),
+        pokemon ("Charizard",189,77,75,39,{{"Flamethrower",37},{"Fireball",63},{"Slash",23},{"Heat wave",79}}),
+        pokemon ("Lucario",168,89,97,72,{{"Close Combat",54},{"Meteor shower",72},{"aura sphere",46},{"iron tale",32}}),
+        pokemon ("Dragonite",192,86,75,89,{{"Dragon pulse",86},{"Hyper Beam",92},{"Dragon Claw",75},{"Draco Meteor",94}})
+    };
+    std::cout<<"States of the pokemon are given below\n";
+    std::cout<<"1."; pokedex[0].getinfo();
+    std::cout<<"2.";pokedex[1].getinfo();
+    std::cout<<"3.";pokedex[2].getinfo();
+    std::cout<<"4.";pokedex[3].getinfo();
+    std::cout<<"Choose two pokemon "<<std::endl;
+    std::cout<<"1->Pikachu"<<"   "<<"2->Charizard"<<"    "<<"3->Lucario"<<"    "<<"4->Dragonite"<<std::endl;
+    std::cout<<"Enter the desired number to select the pokemon"<<std::endl;
+    std::cout<<"Select the first pokemon: ";
+    std::cin>>i;
+    std::cout<<"Now select the second pokemon: ";
+    std::cin>>j;
+    std::cout<<"So the Battle is  "<<std::endl;
+    std::cout<<pokedex[i-1].name<<" VS "<<pokedex[j-1].name<<" !!!!!!!!"<<std::endl;
+    if (pokedex[i-1].speed>pokedex[j-1].speed) {
+        std::cout<<pokedex[i-1].name<<"  Attacks First!!!"<<std::endl;
+        do {
+            std::cout<<"Choose the attack type for " <<pokedex[i-1].name<<" : "<<std::endl;
+            for (int k=0;k<4;k++) {
+                std::cout<<k+1<<"->"<<pokedex[i-1].range[k].first<<" ";
+            }
+            std::cout<<"Enter your desired attack no. : ";
+            std::cin>>l;
+            std::cout<<pokedex[i-1].name<<" Attack with "<<pokedex[i-1].range[l-1].first<<std::endl;
+            int randnum=rand()%4;
+            if (randnum==0)
+            {
+                std::cout<<"it is a critical hit"<<std::endl  ;
+                pokedex[j-1].health-=(pokedex[i-1].range[l-1].second*((double)pokedex[i-1].attack/pokedex[j-1].defense))*2;
+            }
+
+          else {
+              pokedex[j-1].health-=pokedex[i-1].range[l-1].second*((double)pokedex[i-1].attack/pokedex[j-1].defense);
+          }
+            if (pokedex[j-1].health<0)pokedex[j-1].health=0;
+            std::cout<<"Status of "<<pokedex[j-1].name<<std::endl;
+           pokedex[j-1].getinfo();
+            if (pokedex[j-1].health<=0) {
+                std::cout<<pokedex[j-1].name<<" is now fainted"<<std::endl;
+                std::cout<<"THE WINNER IS "<<pokedex[i-1].name<<std::endl;
+                break;
+            }
+            else {
+                std::cout<<pokedex[j-1].name<<" is not fainted"<<std::endl;
+
+            }
+            std::cout<<"Now its time for "<<pokedex[j-1].name<<" to attack "<<std::endl;
+            std::cout<<"Choose the attack for "<<pokedex[j-1].name<<std::endl;
+            for (int k=0;k<4;k++) {
+                std::cout<<k+1<<"->"<<pokedex[j-1].range[k].first<<" ";
+            }
+            std::cout<<"Enter your desired attack no. : ";
+            std::cin>>m;
+            std::cout<<pokedex[j-1].name<<" Attack with "<<pokedex[j-1].range[m-1].first<<std::endl;
+            if (randnum==1)
+            {
+                std::cout<<"it is a critical hit"<<std::endl  ;
+                pokedex[i-1].health-=(pokedex[j-1].range[m-1].second*((double)pokedex[j-1].attack/pokedex[i-1].defense))*2;
+            }
+            else {
+                pokedex[i-1].health-=pokedex[j-1].range[m-1].second*((double)pokedex[j-1].attack/pokedex[i-1].defense);
+            }
+                if (pokedex[i-1].health<0)pokedex[i-1].health=0;
+            std::cout<<"Status of "<<pokedex[i-1].name<<std::endl;
+            pokedex[i-1].getinfo();
+            if (pokedex[i-1].health<=0) {
+                std::cout<<pokedex[i-1].name<<" is now fainted"<<std::endl;
+                std::cout<<"THE WINNER IS "<<pokedex[j-1].name<<std::endl;
+                break;
+            }
+            else {
+                std::cout<<pokedex[i-1].name<<" is not fainted"<<std::endl;
+            }
+        }while (pokedex[i-1].health>0 || pokedex[j-1].health>0);
+        std::cout<<"THE BATTLE IS NOW OVER!!!!!!"<<std::endl;
+        std::cout<<"HOPE YOU ENJOYED";
+        }
+    else {
+std::cout<<pokedex[j-1].name<<"  Attacks First!!!"<<std::endl;
+        do {
+            std::cout<<"Choose the attack type for " <<pokedex[j-1].name<<" : "<<std::endl;
+            for (int k=0;k<4;k++) {
+                std::cout<<k+1<<"->"<<pokedex[j-1].range[k].first<<" ";
+            }
+            std::cout<<"Enter your desired attack no. : ";
+            std::cin>>p;
+            std::cout<<pokedex[j-1].name<<" Attack with "<<pokedex[j-1].range[p-1].first<<std::endl;
+            int randnum2=rand()%3;
+            if (randnum2==1) {
+                std::cout<<"it is a critical hit"<<std::endl  ;
+                pokedex[i-1].health-=(pokedex[j-1].range[p-1].second*((double)pokedex[j-1].attack/pokedex[i-1].defense))*2;
+            }
+            else {
+                pokedex[i-1].health-=pokedex[j-1].range[p-1].second*((double)pokedex[j-1].attack/pokedex[i-1].defense);
+
+            }
+                if (pokedex[i-1].health<0)pokedex[i-1].health=0;
+
+            std::cout<<"Status of "<<pokedex[i-1].name<<std::endl;
+           pokedex[i-1].getinfo();
+            if (pokedex[i-1].health<=0) {
+                std::cout<<pokedex[i-1].name<<" is now fainted"<<std::endl;
+                std::cout<<"THE WINNER IS "<<pokedex[j-1].name<<std::endl;
+                break;
+            }
+            else {
+                std::cout<<pokedex[i-1].name<<" is not fainted"<<std::endl;
+
+            }
+            std::cout<<"Now its time for "<<pokedex[i-1].name<<" to attack "<<std::endl;
+            std::cout<<"Choose the attack for "<<pokedex[i-1].name<<std::endl;
+            for (int k=0;k<4;k++) {
+                std::cout<<k+1<<"->"<<pokedex[i-1].range[k].first<<" ";
+            }
+            std::cout<<"Enter your desired attack no. : ";
+            std::cin>>q;
+            std::cout<<pokedex[i-1].name<<" Attack with "<<pokedex[i-1].range[q-1].first<<std::endl;
+            if (randnum2==2) {
+                std::cout<<"it is a critical hit"<<std::endl  ;
+                pokedex[j-1].health-=(pokedex[i-1].range[q-1].second*((double)pokedex[i-1].attack/pokedex[j-1].defense))*2;
+
+            }
+            else {
+                pokedex[j-1].health-=pokedex[i-1].range[q-1].second*((double)pokedex[i-1].attack/pokedex[j-1].defense);
+            }
+                if (pokedex[j-1].health<0)pokedex[j-1].health=0;
+
+            std::cout<<"Status of "<<pokedex[j-1].name<<std::endl;
+            pokedex[j-1].getinfo();
+            if (pokedex[j-1].health<=0) {
+                std::cout<<pokedex[j-1].name<<" is now fainted"<<std::endl;
+                std::cout<<"THE WINNER IS "<<pokedex[i-1].name<<std::endl;
+                break;
+            }
+            else {
+                std::cout<<pokedex[j-1].name<<" is not fainted"<<std::endl;
+            }
+        }while (pokedex[j-1].health>0 || pokedex[i-1].health>0);
+        std::cout<<"THE BATTLE IS NOW OVER!!!!!!"<<std::endl;
+        std::cout<<"HOPE YOU ENJOYED";
+    }
+    return 0;
+}
