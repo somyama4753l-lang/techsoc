@@ -1,0 +1,51 @@
+#include <iostream>
+#include<vector>
+class pokemon {
+public:
+    pokemon(std::string n,int h,int d,int a,int s,std::vector<std::pair<std::string,int>>type) {
+        name=n;
+        health=h;
+        defense=d;
+        attack=a;
+        range=type;
+        speed=s;
+    }
+    std::string name;
+    int health;
+    int defense;
+    int attack;
+    int speed;
+    std::vector<std::pair<std::string,int>> range;
+    void getinfo() {
+
+        std::cout<<"Name: "<<name;
+        std::cout<<" HP: "<<health;
+        std::cout<<" Defense: "<<defense;
+        std::cout<<" Attack: "<<attack;
+        std::cout<<" Speed: "<<speed<<std::endl;
+        std::cout<<"Attack Type: ";
+        for(int i=0;i<range.size();i++) {
+
+            std::cout<<range[i].first<<"("<<range[i].second<<") ";
+        }
+        std::cout<<std::endl<<std::endl;
+    }
+};
+int main() {
+    int i,j,l,m,p,q;
+
+    std::vector<pokemon> pokedex={
+        pokemon ("Pikachu",150,81,75,48,
+            {{"Thunderbolt",67},{"Quick",56},{"Electroball",40},
+                {"Electroweb",34}}),
+        pokemon ("Charizard",189,77,75,39,{{"Flamethrower",37},{"Fireball",63},{"Slash",23},{"Heat wave",79}}),
+        pokemon ("Lucario",168,89,97,72,{{"Close Combat",54},{"Meteor shower",72},{"aura sphere",46},{"iron tale",32}}),
+        pokemon ("Dragonite",192,86,75,89,{{"Dragon pulse",86},{"Hyper Beam",92},{"Dragon Claw",75},{"Draco Meteor",94}})
+    };
+    std::cout<<"States of the pokemon are given below\n";
+    std::cout<<"1."; pokedex[0].getinfo();
+    std::cout<<"2.";pokedex[1].getinfo();
+    std::cout<<"3.";pokedex[2].getinfo();
+    std::cout<<"4.";pokedex[3].getinfo();
+    return 0;
+}
